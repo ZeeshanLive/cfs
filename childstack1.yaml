@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  VPCCIDRFROMMASTER:
+    Description: we are getting this resource from master stack
+    Type: String
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VPCCIDRFROMMASTER
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+
+Outputs:
+  VPC:
+    Description: A reference to the created VPC
+    Value: !Ref VPC
+  ExportVPC:
+    Description: EXPORTING VPC ID FOR CROSS REFERENCE OF THE STACK 
+    Value: !Ref VPC
+    Export:
+      Name: 
+        'Fn::Sub': 'exported-VPC-ID'

@@ -1,0 +1,9 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:  
+  SubnetFromResourceCreatedinChildStack:
+    Type: AWS::EC2::Subnet
+    Properties: 
+      CidrBlock: 18.0.6.0/24
+      VpcId:
+        'Fn::ImportValue':
+          'Fn::Sub': exported-VPC-ID

@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  vpccidr:
+    Description: This is my master stack
+    Type: String
+  subnetcidr:
+    Type: String
+  subnetcidr2:
+    Type: String
+Resources:
+  myStackWithParams:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: "https://testbucket-cf.s3.eu-west-2.amazonaws.com/childstack1.yaml"
+      Parameters:
+        VPCCIDRFROMMASTER: !Ref vpccidr
+  
+  SubnetFromResourceCreatedinChildStack:
+    Type: AWS::EC2::Subnet
+    Properties: 
+      CidrBlock: !Ref subnetcidr
+      VpcId: !GetAtt myStackWithParams.Outputs.VPC
+
+  myStack2:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: "https://testbucket-cf.s3.eu-west-2.amazonaws.com/childstack2.yaml"
+      Parameters:
+        subnet : !Ref subnetcidr2
+        vpccidr: !GetAtt myStackWithParams.Outputs.VPC

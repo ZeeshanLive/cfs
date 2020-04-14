@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  vpccidr:
+    Description: we are getting this resource from Child1 Stack
+    Type: String
+  subnet:
+    Description: We are getting this resource from Master Stack
+    Type: String
+
+Resources:
+  subnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: !Ref subnet
+      VpcId: !Ref vpccidr
+
+Outputs:
+  subnet2:
+    Description: A reference to the created VPC
+    Value: !Ref subnet2
